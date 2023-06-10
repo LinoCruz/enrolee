@@ -61,27 +61,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `enrolee`.`tags`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `enrolee`.`tags` ;
-
-CREATE TABLE IF NOT EXISTS `enrolee`.`tags` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NULL,
-  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `event_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_tags_events1_idx` (`event_id` ASC) VISIBLE,
-  CONSTRAINT `fk_tags_events1`
-    FOREIGN KEY (`event_id`)
-    REFERENCES `enrolee`.`events` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `enrolee`.`speakers`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `enrolee`.`speakers` ;
@@ -121,6 +100,27 @@ CREATE TABLE IF NOT EXISTS `enrolee`.`assistans_events` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_has_events_events1`
+    FOREIGN KEY (`event_id`)
+    REFERENCES `enrolee`.`events` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `enrolee`.`tags`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `enrolee`.`tags` ;
+
+CREATE TABLE IF NOT EXISTS `enrolee`.`tags` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `event_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_tags_events1_idx` (`event_id` ASC) VISIBLE,
+  CONSTRAINT `fk_tags_events1`
     FOREIGN KEY (`event_id`)
     REFERENCES `enrolee`.`events` (`id`)
     ON DELETE NO ACTION

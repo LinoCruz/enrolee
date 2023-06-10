@@ -14,17 +14,41 @@
     />
     <title>Enrolee</title>
   </head>
+  <header class="dash_header">
+    <h3 class="header_title">Enrolee</h3>
+    <input
+      type="text"
+      id="search_box"
+      placeholder="Search"
+      class="search_bar_header"
+    />
+    <div btns_header>
+      <button class="btn_header btn_create_event">
+        <a href="/new/event">Create Your Event</a>
+      </button>
+      <button class="btn_header">
+        <div class="dropdown">
+          <div class="dropdown_select">
+            <span class="select">My Profile</span>
+            <i class="uil uil-angle-down"></i>
+          </div>
+          <div class="dropdown_list">
+            <div class="dropdown_list_item">
+              <a href="/config">Configuration</a>
+            </div>
+            <div class="dropdown_list_item"><a href="/logout">Log Out</a></div>
+          </div>
+        </div>
+      </button>
+    </div>
+  </header>
   <body class="dash_body">
-    <header class="dash_header">
-      <h3>Enrolee</h3>
-      <input type="text" id="search_box" value="Search" />
-      <div btns_header>
-        <button>Create Your Event</button>
-        <button>My Profile</button>
-      </div>
-    </header>
     <div class="dash_container">
       <div class="dash_nav">
+        <h3 class="title_nav">
+          Hey <span>{{user.first_name}}</span>!, Welcome Back!
+          <i class="uil uil-smile-beam"></i>
+        </h3>
         <h4>Interests</h4>
         <ul class="dash_tags">
           <li><button class="tags">Science</button></li>
@@ -43,247 +67,221 @@
           <li><button class="tags">Cybersecuity</button></li>
           <li><button class="tags">Mathematics</button></li>
         </ul>
+        <div>
+          <h4>Your next events</h4>
+          <div>
+            <div>Event 1</div>
+            <div>Event 2</div>
+          </div>
+        </div>
+        <div>
+          <h3>Your events:</h3>
+          {% for event in events2 %}
+          <div class="own_events_prev">
+            <p>{{event.title}}</p>
+            <p>{{event.date}}</p>
+            <a href="/event/details"
+              >See Event<i class="uil uil-angle-right"></i
+            ></a>
+          </div>
+          {% endfor %}
+        </div>
       </div>
 
-      <div>
-        <div class="dash_all">
-          <h3 class="">Enroll New Events</h3>
-          <div class="dash_cards">
-            <div class="card_prev">
-              <div class="description_prev">
-                <a href="#" class="card_title_prev"
-                  ><h5>Analyzing War in Ukraine</h5></a
-                >
-                <p class="host_prev">
-                  Pontificia Universidad Católica del Perú
-                </p>
-              </div>
-              <img
-                class="img_prev"
-                src="{{url_for('static', filename='img/event1.png')}}"
-              />
-              <div class="time_data_prev">
-                <ul class="ul_prev">
-                  <li class="location_prev">
-                    <i class="uil uil-map-marker icon_prev"
-                      ><span>Online</span></i
-                    >
-                  </li>
-                  <li class="date_prev">
-                    <i class="uil uil-schedule icon_prev"
-                      ><span>March 29th, 2022</span></i
-                    >
-                  </li>
-                </ul>
-                <a href="#" class="link_enroll_prev">Enroll Now</a>
+      <div class="all_cards">
+        <h3 class="title_dash_container">Enroll New Events</h3>
+        <div class="cards_title_container">
+          <h4 class="title_events_here">Events Organized by Our Community</h4>
+        </div>
+        <div id="events_here_id" class="events_here">
+          {% for event in events %}
+          <div class="card_prev">
+            <div class="description_prev">
+              <a href="/event/details" class="card_title_prev"
+                ><h5>{{event.title}}</h5></a
+              >
+              <p class="host_prev">{{event.host}}</p>
+            </div>
+            <img
+              class="img_prev"
+              src="{{url_for('static', filename='img/'+event.image)}}"
+              alt="cover photo of the event"
+            />
+            <div class="time_data_prev">
+              <ul class="ul_prev">
+                <li class="location_prev">
+                  <i class="uil uil-map-marker icon_prev"
+                    ><span>Online</span></i
+                  >
+                </li>
+                <li class="date_prev">
+                  <i class="uil uil-schedule icon_prev"
+                    ><span>{{event.date}}</span></i
+                  >
+                </li>
+              </ul>
+              <div class="more_details">
+                <a href="event/details" class="link_enroll_prev">Enroll Now</a>
+                <a href="event/details" class="details_prev"
+                  >More Details<i class="uil uil-angle-right"></i
+                ></a>
               </div>
             </div>
-            <div class="card_prev">
-              <div class="description_prev">
-                <a href="#" class="card_title_prev"
-                  ><h5>Analyzing War in Ukraine</h5></a
-                >
-                <p class="host_prev">
-                  Pontificia Universidad Católica del Perú
-                </p>
-              </div>
-              <img
-                class="img_prev"
-                src="{{url_for('static', filename='img/event1.png')}}"
-              />
-              <div class="time_data_prev">
-                <ul class="ul_prev">
-                  <li class="location_prev">
-                    <i class="uil uil-map-marker icon_prev"
-                      ><span>Online</span></i
-                    >
-                  </li>
-                  <li class="date_prev">
-                    <i class="uil uil-schedule icon_prev"
-                      ><span>March 29th, 2022</span></i
-                    >
-                  </li>
-                </ul>
-                <a href="#" class="link_enroll_prev">Enroll Now</a>
-              </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="btn_more_events" id="btn_more">
+          <button id="btn_with_functions" type="button">
+            More Events<i class="uil uil-plus"></i>
+          </button>
+        </div>
+
+        <div class="cards_title_container">
+          <h4>Events Organized Elsewhere</h4>
+        </div>
+        <div class="events_outside">
+          <div class="card_prev">
+            <div class="description_prev">
+              <a href="#" class="card_title_prev"
+                ><h5>Analyzing War in Ukraine</h5></a
+              >
+              <p class="host_prev">Pontificia Universidad Católica del Perú</p>
             </div>
-            <div class="card_prev">
-              <div class="description_prev">
-                <a href="#" class="card_title_prev"
-                  ><h5>Analyzing War in Ukraine</h5></a
-                >
-                <p class="host_prev">
-                  Pontificia Universidad Católica del Perú
-                </p>
-              </div>
-              <img
-                class="img_prev"
-                src="{{url_for('static', filename='img/event1.png')}}"
-              />
-              <div class="time_data_prev">
-                <ul class="ul_prev">
-                  <li class="location_prev">
-                    <i class="uil uil-map-marker icon_prev"
-                      ><span>Online</span></i
-                    >
-                  </li>
-                  <li class="date_prev">
-                    <i class="uil uil-schedule icon_prev"
-                      ><span>March 29th, 2022</span></i
-                    >
-                  </li>
-                </ul>
-                <a href="#" class="link_enroll_prev">Enroll Now</a>
-              </div>
+            <img
+              class="img_prev"
+              src="{{url_for('static', filename='img/event1.png')}}"
+            />
+            <div class="time_data_prev">
+              <ul class="ul_prev">
+                <li class="location_prev">
+                  <i class="uil uil-map-marker icon_prev"
+                    ><span>Online</span></i
+                  >
+                </li>
+                <li class="date_prev">
+                  <i class="uil uil-schedule icon_prev"
+                    ><span>March 29th, 2022</span></i
+                  >
+                </li>
+              </ul>
+              <a href="#" class="link_enroll_prev">Enroll Now</a>
             </div>
-            <div class="card_prev">
-              <div class="description_prev">
-                <a href="#" class="card_title_prev"
-                  ><h5>Analyzing War in Ukraine</h5></a
-                >
-                <p class="host_prev">
-                  Pontificia Universidad Católica del Perú
-                </p>
-              </div>
-              <img
-                class="img_prev"
-                src="{{url_for('static', filename='img/event1.png')}}"
-              />
-              <div class="time_data_prev">
-                <ul class="ul_prev">
-                  <li class="location_prev">
-                    <i class="uil uil-map-marker icon_prev"
-                      ><span>Online</span></i
-                    >
-                  </li>
-                  <li class="date_prev">
-                    <i class="uil uil-schedule icon_prev"
-                      ><span>March 29th, 2022</span></i
-                    >
-                  </li>
-                </ul>
-                <a href="#" class="link_enroll_prev">Enroll Now</a>
-              </div>
+          </div>
+          <div class="card_prev">
+            <div class="description_prev">
+              <a href="#" class="card_title_prev"
+                ><h5>Analyzing War in Ukraine</h5></a
+              >
+              <p class="host_prev">Pontificia Universidad Católica del Perú</p>
             </div>
-            <div class="card_prev">
-              <div class="description_prev">
-                <a href="#" class="card_title_prev"
-                  ><h5>Analyzing War in Ukraine</h5></a
-                >
-                <p class="host_prev">
-                  Pontificia Universidad Católica del Perú
-                </p>
-              </div>
-              <img
-                class="img_prev"
-                src="{{url_for('static', filename='img/event1.png')}}"
-              />
-              <div class="time_data_prev">
-                <ul class="ul_prev">
-                  <li class="location_prev">
-                    <i class="uil uil-map-marker icon_prev"
-                      ><span>Online</span></i
-                    >
-                  </li>
-                  <li class="date_prev">
-                    <i class="uil uil-schedule icon_prev"
-                      ><span>March 29th, 2022</span></i
-                    >
-                  </li>
-                </ul>
-                <a href="#" class="link_enroll_prev">Enroll Now</a>
-              </div>
+            <img
+              class="img_prev"
+              src="{{url_for('static', filename='img/event1.png')}}"
+            />
+            <div class="time_data_prev">
+              <ul class="ul_prev">
+                <li class="location_prev">
+                  <i class="uil uil-map-marker icon_prev"
+                    ><span>Online</span></i
+                  >
+                </li>
+                <li class="date_prev">
+                  <i class="uil uil-schedule icon_prev"
+                    ><span>March 29th, 2022</span></i
+                  >
+                </li>
+              </ul>
+              <a href="#" class="link_enroll_prev">Enroll Now</a>
             </div>
-            <div class="card_prev">
-              <div class="description_prev">
-                <a href="#" class="card_title_prev"
-                  ><h5>Analyzing War in Ukraine</h5></a
-                >
-                <p class="host_prev">
-                  Pontificia Universidad Católica del Perú
-                </p>
-              </div>
-              <img
-                class="img_prev"
-                src="{{url_for('static', filename='img/event1.png')}}"
-              />
-              <div class="time_data_prev">
-                <ul class="ul_prev">
-                  <li class="location_prev">
-                    <i class="uil uil-map-marker icon_prev"
-                      ><span>Online</span></i
-                    >
-                  </li>
-                  <li class="date_prev">
-                    <i class="uil uil-schedule icon_prev"
-                      ><span>March 29th, 2022</span></i
-                    >
-                  </li>
-                </ul>
-                <a href="#" class="link_enroll_prev">Enroll Now</a>
-              </div>
+          </div>
+          <div class="card_prev">
+            <div class="description_prev">
+              <a href="#" class="card_title_prev"
+                ><h5>Analyzing War in Ukraine</h5></a
+              >
+              <p class="host_prev">Pontificia Universidad Católica del Perú</p>
             </div>
-            <div class="card_prev">
-              <div class="description_prev">
-                <a href="#" class="card_title_prev"
-                  ><h5>Analyzing War in Ukraine</h5></a
-                >
-                <p class="host_prev">
-                  Pontificia Universidad Católica del Perú
-                </p>
-              </div>
-              <img
-                class="img_prev"
-                src="{{url_for('static', filename='img/event1.png')}}"
-              />
-              <div class="time_data_prev">
-                <ul class="ul_prev">
-                  <li class="location_prev">
-                    <i class="uil uil-map-marker icon_prev"
-                      ><span>Online</span></i
-                    >
-                  </li>
-                  <li class="date_prev">
-                    <i class="uil uil-schedule icon_prev"
-                      ><span>March 29th, 2022</span></i
-                    >
-                  </li>
-                </ul>
-                <a href="#" class="link_enroll_prev">Enroll Now</a>
-              </div>
-            </div>
-            <div class="card_prev">
-              <div class="description_prev">
-                <a href="#" class="card_title_prev"
-                  ><h5>Analyzing War in Ukraine</h5></a
-                >
-                <p class="host_prev">
-                  Pontificia Universidad Católica del Perú
-                </p>
-              </div>
-              <img
-                class="img_prev"
-                src="{{url_for('static', filename='img/event1.png')}}"
-              />
-              <div class="time_data_prev">
-                <ul class="ul_prev">
-                  <li class="location_prev">
-                    <i class="uil uil-map-marker icon_prev"
-                      ><span>Online</span></i
-                    >
-                  </li>
-                  <li class="date_prev">
-                    <i class="uil uil-schedule icon_prev"
-                      ><span>March 29th, 2022</span></i
-                    >
-                  </li>
-                </ul>
-                <a href="#" class="link_enroll_prev">Enroll Now</a>
-              </div>
+            <img
+              class="img_prev"
+              src="{{url_for('static', filename='img/event1.png')}}"
+            />
+            <div class="time_data_prev">
+              <ul class="ul_prev">
+                <li class="location_prev">
+                  <i class="uil uil-map-marker icon_prev"
+                    ><span>Online</span></i
+                  >
+                </li>
+                <li class="date_prev">
+                  <i class="uil uil-schedule icon_prev"
+                    ><span>March 29th, 2022</span></i
+                  >
+                </li>
+              </ul>
+              <a href="#" class="link_enroll_prev">Enroll Now</a>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- =======FOOTER=========== -->
+    <footer class="footer">
+      <div class="container_footer">
+        <div class="foot1">
+          <h3>Welcome Here</h3>
+          <p class="welcome_footer">
+            Hi, this website has been designed by me, Lino Cruz, as a part of my
+            portfolio projects, for more info, visit my website at
+            <a href="https://linocruz.github.io/my_web_page/" class="myweb"
+              >linocruz.com</a
+            >
+          </p>
+        </div>
+        <div class="foot2">
+          <h3>About the site</h3>
+          <p class="description_footer">
+            This site has been develop with HTML, CSS, JAVASCRIPT, several
+            plugins, and in the Backend, works with Python, Flask, Flash and
+            MySQL.<a
+              href="https://github.com/LinoCruz/enrolee"
+              class="code_footer"
+            >
+              Look the code here</a
+            >.
+          </p>
+        </div>
+        <div class="foot3">
+          <h3>Let's connect on</h3>
+          <ul class="ul_sm">
+            <li>
+              <i class="uil uil-linkedin"></i
+              ><a href="https://www.linkedin.com/in/lino-cruz-519597234/"
+                >Linkedin</a
+              >
+            </li>
+            <li>
+              <i class="uil uil-github"></i
+              ><a href="https://github.com/LinoCruz">GitHub</a>
+            </li>
+            <li>
+              <i class="uil uil-youtube"></i
+              ><a
+                href="https://www.youtube.com/channel/UCB_YFjDFb9vZ7QcarxmjGPw"
+                >Youtube</a
+              >
+            </li>
+            <li>
+              <i class="uil uil-discord"></i
+              ><a href="https://discord.gg/nvp8TfRK8h">Discord</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="final_footer">
+        <p>All rigths reserved <i class="uil uil-copyright"></i> 2022</p>
+      </div>
+    </footer>
+    <!-- ---- PRINCIPAL SCRIPT---- -->
+    <script src="{{url_for('static', filename = 'js/script3.js')}}"></script>
   </body>
 </html>

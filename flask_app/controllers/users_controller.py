@@ -1,11 +1,12 @@
 from flask import jsonify, render_template, redirect, session, request, flash
 from flask_app import app
 from flask_app.models.users import User
-# from flask_app.models.events import Event
+from flask_app.models.events import Event
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
-#PRINCIPAL
+
+#MAIN
 @app.route("/")
 def index():
     return render_template('index.html')
@@ -18,9 +19,22 @@ def signup():
 #DASHBOARD
 @app.route("/dashboard")
 def dashboard():
-    return render_template('dashboard.html')
+    if 'user_id' not in session:
+        return redirect('/')
 
-#FUNCTION TO REGISTER USERS
+    data = {
+        "id": session['user_id']
+    }
+    
+    user = User.get_by_id(data)
+    #Events Data
+    events = Event.get_all()
+    events_created = Event.users_events(data)
+    
+    return render_template('dashboard.html', user=user, events=events, events2=events_created)
+  
+
+#FUNCTION TO REGISTER USER
 @app.route("/register", methods=["POST"])
 def register():
     if not User.valida_usuario(request.form):
@@ -41,7 +55,7 @@ def register():
     
     return redirect("/dashboard")
 
-#FUNCTION TO 
+#FUNCTION TO VALIDATE USER
 @app.route("/login", methods=["POST"])
 def login():
     user = User.get_by_email(request.form)
@@ -59,5 +73,11 @@ def login():
         
     session['user_id'] = user.id
     # return redirect('/dashboard')
-    return jsonify(message="Welcome back")
+    return jsonify(message="Welcomeback")
 
+
+#LOGOUT 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect('/')

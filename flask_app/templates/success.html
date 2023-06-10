@@ -12,9 +12,8 @@
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
-    <title>New Event</title>
+    <title>Enrolee</title>
   </head>
-
   <header class="dash_header">
     <h3 class="header_title">Enrolee</h3>
     <input
@@ -24,6 +23,9 @@
       class="search_bar_header"
     />
     <div btns_header>
+      <button class="btn_header btn_create_event">
+        <a href="/new/event">Create Your Event</a>
+      </button>
       <button class="btn_header">
         <div class="dropdown">
           <div class="dropdown_select">
@@ -40,64 +42,31 @@
       </button>
     </div>
   </header>
-  <body class="new_body">
-    <div class="newEvent">
-      <h1>Hey {{user.first_name}}</h1>
-      <h2>Let's Create a New Event</h2>
-      <form
-        class="new_form"
-        action="/create/event"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <input type="hidden" name="user_id" value="{{user.id}}" />
-        <div>
-          <label for="event_title">Title</label>
-          <input type="text" name="title" id="event_title" />
-        </div>
+  <body class="success_body">
+    <div class="success">
+      <h1>Hey {{user.first_name}} You have successfully created your event</h1>
+      <h2>Look at the events you have created:</h2>
 
-        <div>
-          <label for="event_description">Description</label>
-          <textarea type="text" name="description" id="event_description"cols="30" rows="10" /></textarea>
-        </div>
-
-        <div>
-          <label for="event_host">Hosted by</label>
-          <input type="text" name="host" id="event_host" />
-        </div>
-
-        <div>
-          <label for="location">Location</label>
-          <input type="text" name="location" id="location" />
-        </div>
-        <div>
-          <label for="cost">Cost</label>
-          <input type="text" name="cost" id="cost" />
-        </div>
-        <div>
-          <label for="date">Date</label>
-          <input type="date" name="date" id="date" />
-        </div>
-        <div>
-          <label for="time">Time</label>
-          <input type="time" name="time" id="time" />
-        </div>
-        <div>
-          <label for="registration">Registration Link</label>
-          <input type="text" name="registration" id="registration" />
-        </div>
-        <div>
-          <label for="image">Cover Image</label>
-          <input type="file" name="image" id="image" />
-        </div>
-        <div>
-          <label for="tags">Tags</label>
-          <input type="text" name="tags" id="tags" />
-        </div>
-        <div>
-          <input type="submit" value="Create Event" />
-        </div>
-      </form>
+      <h3>title:</h3>
+      <p>{{event.title}}</p>
+      <div>
+        <img
+          src="{{url_for('static', filename='img/'+event.image)}}"
+          alt="cover photo of the event"
+          style="width: 150px; height: 100px"
+        />
+      </div>
+      <h3>Description:</h3>
+      <p>{{event.description}}</p>
+      <h3>Date</h3>
+      <p>{{event.date}}</p>
+      <h3>Time</h3>
+      <p>{{event.time}}</p>
+      <h3>Cost</h3>
+      <p>{{event.cost}}</p>
+    </div>
+    <div>
+      <h4><a href="/dashboard">Home</a></h4>
     </div>
     <!-- =======FOOTER=========== -->
     <footer class="footer">
